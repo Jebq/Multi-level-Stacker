@@ -170,7 +170,9 @@ class Level():
 
 			self.fit(df_train, y_train)
 			OOF_prediction[valid_index, :] = self.predict(df_valid)
-			test_prediction = self.predict(test)/n_folds
+			if len(test) > 0:
+				test_prediction = self.predict(test)/n_folds
+
 			for k in np.arange(0, OOF_prediction.shape[1]):
 				score_CV[i, k] = metric(y_valid, OOF_prediction[valid_index, k])
 				print('{0} : {1:.5f}'.format(self.model_names[k], score_CV[i, k]))
@@ -199,7 +201,11 @@ class Level():
 
 		self.fit(df, y)
 		prediction = self.predict(df)
-		test_prediction = self.predict(test)
+		test_prediction = np.zeros((len(test), len(self.models)))
+
+		if len(test) > 0:
+			test_prediction = self.predict(test)
+
 		for k in np.arange(0, prediction.shape[1]):
 			print(metric(y, prediction[:,k]))
 			
