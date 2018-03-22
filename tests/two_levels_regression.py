@@ -17,7 +17,7 @@ class TwoLevelsTest(unittest.TestCase):
 	    level1 = {'Lasso':LassoCV(), 'RidgeCV':RidgeCV()}
 	    level2 = {'Linear Regression':LinearRegression()}
 
-	    model = ensemble.Ensemble(levels = [level1, level2])
+	    model = ensemble.Ensemble(levels = [level1, level2], store_oof=True)
 	    model.fit_predict(train, y)
 
 	def test_classification(self):
