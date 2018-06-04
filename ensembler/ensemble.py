@@ -150,7 +150,7 @@ class Level():
 				predictions[:, i] = self.models[model_name].predict_proba(df)[:,1]
 				print('{} - Classifier detected...probability of 1 predicted'.format(model_name))
 			except:
-				predictions[:, i] = self.models[model_name].predict(df)[0]
+				predictions[:, i] = self.models[model_name].predict(df).reshape(1,-1)[0]
 				if self.binary_scale:
 					scaler = MinMaxScaler(feature_range=(0,1))
 					predictions[:, i] = scaler.fit_transform(predictions[:, i].reshape(-1, 1)).transpose()[0]
