@@ -47,7 +47,7 @@ class Ensemble:
 			self.cv = cv
 
 		for i, models in enumerate(levels):
-			self.levels.append(Level(models = models, cv = (self.cv - i) if (self.cv - i)>=3 else 3, corr_thresh = correlation_threshold,
+			self.levels.append(Level(models = models, cv = self.cv, corr_thresh = correlation_threshold,
 							binary_scale = binary_scale, stratified_k_fold = stratified_k_fold))
 
 	def save_predictions(self, predict_train, predict_test, i):
