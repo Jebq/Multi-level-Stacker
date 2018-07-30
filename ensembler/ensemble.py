@@ -42,7 +42,7 @@ class Ensemble:
 		self.store_oof = store_oof
 
 		if cv == None:
-			self.cv = len(levels) + 3
+			self.cv = KFold(n_splits = 5, shuffle = True, random_seed = 1994)
 		else:
 			self.cv = cv
 
