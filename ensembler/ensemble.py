@@ -30,8 +30,7 @@ class Ensemble:
 			levels (list of dict): levels is a list of dictionnaries whose attributes are the models you
 				want to incorporate at a given level.
 			metric (:obj:`sklearn.metrics`, optional): Metric used for assessing your models' performance.
-			cv (int): Number of folds for the first level (in case of several levels) - Then the amount of fold is decremented for each levels 
-				until a minimum of 3 fold is reaches.
+			cv (int): CV object
 			correlation_threshold (float): Between 0 and 1 - Before training models - check the correlation between features and drop one if 
 				it has a pearson's correlation with another feature > threshold.
 			binary_scale (bool, optional): Whether the models' outputs should be scaled to [0,1].
@@ -168,12 +167,12 @@ class Level():
 			metric (:obj:`sklearn.metrics`): Metric used for assessing models` performance
 			kf (:obj:`sklearn.KFold` or :obj:`sklearn.StratifiedKFold`): Cross validation method.
 		"""
-		n_folds = self.cv
-		if self.stratified_k_fold:
-			kf = StratifiedKFold(n_splits = n_folds, random_state = 55, shuffle= True)
-		else:
-			kf = KFold(n_splits = n_folds, random_state = 55, shuffle= True)
-
+		#n_folds = self.cv
+		#if self.stratified_k_fold:
+		#	kf = StratifiedKFold(n_splits = n_folds, random_state = 55, shuffle= True)
+		#else:
+		#	kf = KFold(n_splits = n_folds, random_state = 55, shuffle= True)
+		n_folds = cv.get_n_splits()
 
 		if self.corr_thresh:
 			to_drop = check_multicollinearity(df)
@@ -184,7 +183,7 @@ class Level():
 		test_prediction = np.zeros((len(test), len(self.models)))
 
 		score_CV = np.zeros((n_folds, len(self.models)))
-		for i, (train_index, valid_index) in enumerate(kf.split(df, y)):
+		for i, (train_index, valid_index) in enumerate(cv.split(df, y)):
 			df_train = df.loc[train_index]
 			df_valid = df.loc[valid_index]
 			y_train = y[train_index]
