@@ -16,6 +16,7 @@ import numpy as np
 from sklearn.metrics import mean_squared_error
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.model_selection import KFold, StratifiedKFold
+from scipy.stats import rankdata
 
 import os
 
@@ -151,8 +152,7 @@ class Level():
 			except:
 				predictions[:, i] = self.models[model_name].predict(df).reshape(1,-1)[0]
 				if self.binary_scale:
-					scaler = MinMaxScaler(feature_range=(0,1))
-					predictions[:, i] = scaler.fit_transform(predictions[:, i].reshape(-1, 1)).transpose()[0]
+					predictions[:, i] = rankdata(predictions[:, i])/len(predictions[:, i])
 
 		return predictions
 
