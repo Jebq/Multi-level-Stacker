@@ -172,7 +172,7 @@ class Level():
 		#	kf = StratifiedKFold(n_splits = n_folds, random_state = 55, shuffle= True)
 		#else:
 		#	kf = KFold(n_splits = n_folds, random_state = 55, shuffle= True)
-		n_folds = cv.get_n_splits()
+		n_folds = self.cv.get_n_splits()
 
 		if self.corr_thresh:
 			to_drop = check_multicollinearity(df)
@@ -183,7 +183,7 @@ class Level():
 		test_prediction = np.zeros((len(test), len(self.models)))
 
 		score_CV = np.zeros((n_folds, len(self.models)))
-		for i, (train_index, valid_index) in enumerate(cv.split(df, y)):
+		for i, (train_index, valid_index) in enumerate(self.cv.split(df, y)):
 			df_train = df.loc[train_index]
 			df_valid = df.loc[valid_index]
 			y_train = y[train_index]
