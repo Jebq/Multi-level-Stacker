@@ -194,7 +194,7 @@ class Level():
 			self.fit(df_train, y_train)
 			OOF_prediction[valid_index, :] = self.predict(df_valid)
 			if len(test) > 0:
-				test_prediction = self.predict(test)/n_folds
+				test_prediction += self.predict(test)/n_folds
 
 			for k in np.arange(0, OOF_prediction.shape[1]):
 				score_CV[i, k] = metric(y_valid, OOF_prediction[valid_index, k])
