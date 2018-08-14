@@ -178,6 +178,8 @@ class Level():
 			to_drop = check_multicollinearity(df)
 			print('{} will be dropped - Highly correlated to another feature'.format(to_drop))
 			df.drop(to_drop, axis = 1, inplace = True)
+			if len(test) > 0
+				test.drop(to_drop, axis = 1, inplace = True)
 
 		OOF_prediction = np.zeros((len(df), len(self.models)))
 		test_prediction = np.zeros((len(test), len(self.models)))
@@ -221,6 +223,8 @@ class Level():
 			to_drop = check_multicollinearity(df)
 			print('{} will be dropped - Highly correlated to another feature'.format(to_drop))
 			df.drop(to_drop, axis = 1, inplace = True)
+			if len(test) > 0
+				test.drop(to_drop, axis = 1, inplace = True)
 
 		self.fit(df, y)
 		prediction = self.predict(df)
